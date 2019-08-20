@@ -1,18 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class AlchoholModel : MonoBehaviour
+﻿public class AlchoholModel
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string Title { get; set; }
+    public float Volume { get; set; }
+    public float Percentage { get; set; }
 }

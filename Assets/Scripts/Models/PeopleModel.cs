@@ -1,18 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PeopleModel : MonoBehaviour
+﻿public class PeopleModel
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public bool IsMale { get; set; }
+    public float Height { get; set; }
+    public float Weight { get; set; }
 }
