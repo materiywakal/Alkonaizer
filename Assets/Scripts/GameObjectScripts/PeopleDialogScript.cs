@@ -4,58 +4,92 @@ using UnityEngine.UI;
 
 public class PeopleDialogScript : MonoBehaviour
 {
-    public PeopleModel People;
+    private PeopleModel People;
 
     [SerializeField] public GameObject MCheckBox;
+    [SerializeField] public GameObject FCheckBox;
     [SerializeField] public GameObject HeightInput;
+    private bool HeightCheck = true;
     [SerializeField] public GameObject WeightInput;
+    private bool WeightCheck = true;
 
     private void Start()
     {
-        People = new PeopleModel();
-    }
+        People = GameObject.Find("TopPanel").GetComponent<StateCalculationScript>().GetPeople();
+        if(People == null)
+            People = new PeopleModel();
 
-    private void LoadModel()
-    {
-        // Take PeopleModel from logical entity
+        if (People.IsMale)
+        {
+            MCheckBox.GetComponent<Toggle>().isOn = true;
+        }
+        else
+        {
+            FCheckBox.GetComponent<Toggle>().isOn = true;
+        }
+
+        if (People.Height != 0)
+            HeightInput.GetComponent<InputField>().text = People.Height.ToString();
+        if (People.Weight != 0)
+            WeightInput.GetComponent<InputField>().text = People.Weight.ToString();
     }
 
     public void Save()
     {
-        // Send PeopleModel to logical entity
+        if (CheckValues())
+        {
+            //Save
+            GameObject topPanel = GameObject.Find("TopPanel");
 
-        DestroySelf();
+            topPanel.GetComponent<StateCalculationScript>().SetPeople(People);
+
+            //Updating calculations
+            topPanel.GetComponent<StateCalculationScript>().UpdateState();
+
+            DestroySelf();
+        }
     }
 
     public void ParseHeight()
     {
-        float height = Single.Parse(HeightInput.GetComponent<InputField>().text.Replace('.', ','));
-        if (height >= 30 && height <= 300)
+        float height = 0;
+        if (Single.TryParse(HeightInput.GetComponent<InputField>().text.Replace('.', ','), out height) &&
+            height >= 30 && height <= 300)
         {
             People.Height = height;
+            HeightCheck = true;
         }
         else
         {
             HeightInput.GetComponent<InputField>().text = null;
+            HeightCheck = false;
         }
     }
 
     public void ParseWeight()
     {
-        float weight = Single.Parse(WeightInput.GetComponent<InputField>().text.Replace('.', ','));
-        if (weight >= 20 && weight <= 300)
+        float weight = 0;
+        if (Single.TryParse(WeightInput.GetComponent<InputField>().text.Replace('.', ','), out weight) &&
+            weight >= 20 && weight <= 300)
         {
             People.Weight = weight;
+            WeightCheck = true;
         }
         else
         {
             WeightInput.GetComponent<InputField>().text = null;
+            WeightCheck = false;
         }
     }
 
     public void ParseGender()
     {
         People.IsMale = MCheckBox.GetComponent<Toggle>().isOn;
+    }
+
+    private bool CheckValues()
+    {
+        return HeightCheck && WeightCheck;
     }
 
     public void DestroySelf()
