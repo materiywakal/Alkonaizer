@@ -14,12 +14,16 @@ public class ItemButtonScript : MonoBehaviour
 
     public void DestroySelf()
     {
-        Alchohol.Volume = 0;
-        Alchohol.Percentage = 0;
-
-        //Updating calculations
-        GameObject.Find("TopPanel").GetComponent<StateCalculationScript>().UpdateState();
-
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        GameObject obj = GameObject.Find("TopPanel");
+        if (obj != null)
+        {
+            //Updating calculations
+            obj.GetComponent<StateCalculationScript>().UpdateState();
+        }
     }
 }

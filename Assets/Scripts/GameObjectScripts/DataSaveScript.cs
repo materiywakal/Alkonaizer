@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
 public class DataSaveScript
@@ -30,8 +29,6 @@ public class DataSaveScript
         list.Container = alchohol;
 
         string jsonDataString = JsonUtility.ToJson(list, true);
-
-        Debug.Log(alchohol.First().Title);
 
         File.WriteAllText(AlchoholFilePath, jsonDataString);
     }

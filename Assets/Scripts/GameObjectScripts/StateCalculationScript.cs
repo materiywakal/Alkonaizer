@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,6 @@ public class StateCalculationScript : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("start");
         DataSaver = new DataSaveScript();
         DataSaver.DeserializeData();
 
@@ -83,29 +83,59 @@ public class StateCalculationScript : MonoBehaviour
 
     private string StringResult(float C)
     {
+        int statePercentage = PercentageOfState(C);
+
         if (C <= 0.5f)
         {
-            return "No cause";
+            return "По нулям (" + statePercentage + "%)";
         }
         else if (C > 0.5f && C <= 1.5f)
         {
-            return "Easy";
+            return "Легко (" + statePercentage + "%)";
         }
         else if (C > 1.5f && C <= 2)
         {
-            return "Medium";
+            return "Среднячок (" + statePercentage + "%)";
         }
         else if (C > 2 && C <= 3)
         {
-            return "Hard";
+            return "Все, нормас (" + statePercentage + "%)";
         }
         else if (C > 3 && C < 5)
         {
-            return "Hard intoxication";
+            return "Траванулся (" + statePercentage + "%)";
         }
         else
         {
-            return "Lethal intoxication";
+            return "Умер (" + statePercentage + "%)";
+        }
+    }
+
+    private int PercentageOfState(float C)
+    {
+        if (C <= 0.5f)
+        {
+            return (int) (C * 100f / 0.5f);
+        }
+        else if (C > 0.5f && C <= 1.5f)
+        {
+            return (int) ((C - 0.5f) * 100);
+        }
+        else if (C > 1.5f && C <= 2)
+        {
+            return (int)((C - 1.5f) * 100f / 0.5f);
+        }
+        else if (C > 2 && C <= 3)
+        {
+            return (int)((C - 2f) * 100f);
+        }
+        else if (C > 3 && C < 5)
+        {
+            return (int)((C - 3f) * 100f / 2f);
+        }
+        else
+        {
+            return (int)((C - 5f) * 100f / 5f + 100f);
         }
     }
 

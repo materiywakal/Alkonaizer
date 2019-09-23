@@ -9,12 +9,18 @@ public class AlchoholDialogScript : MonoBehaviour
     public GameObject Entity;
 
     [SerializeField] public GameObject TitleInput;
+    [SerializeField] public GameObject TitleInputName;
+    private string TempTitle;
     private bool TitleCheck = false;
 
     [SerializeField] public GameObject VolumeInput;
+    [SerializeField] public GameObject VolumeInputName;
+    private float TempVolume;
     private bool VolumeCheck = false;
 
     [SerializeField] public GameObject PercentageInput;
+    [SerializeField] public GameObject PercentageInputName;
+    private float TempPercentage;
     private bool PercentageCheck = false;
 
     [SerializeField] public GameObject AlchoholButton;
@@ -24,6 +30,9 @@ public class AlchoholDialogScript : MonoBehaviour
         if (Entity != null)
         {
             Alchohol = Entity.GetComponent<ItemButtonScript>().Alchohol;
+            TempTitle = Alchohol.Title;
+            TempPercentage = Alchohol.Percentage;
+            TempVolume = Alchohol.Volume;
             TitleInput.GetComponent<InputField>().text = Alchohol.Title;
             VolumeInput.GetComponent<InputField>().text = Alchohol.Volume.ToString();
             PercentageInput.GetComponent<InputField>().text = Alchohol.Percentage.ToString();
@@ -35,11 +44,23 @@ public class AlchoholDialogScript : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DestroySelf();
+        }
+    }
+
     public void Save()
     {
         // Send AlchoholModel to logical entity
         if(!CheckValues())
             return;
+
+        Alchohol.Title = TempTitle;
+        Alchohol.Volume = TempVolume;
+        Alchohol.Percentage = TempPercentage;
 
         GameObject button;
         if (Entity != null)
@@ -59,7 +80,7 @@ public class AlchoholDialogScript : MonoBehaviour
         //Updating calculations
         GameObject.Find("TopPanel").GetComponent<StateCalculationScript>().UpdateState();
 
-        DestroySelf();
+        Destroy(gameObject);
     }
 
     public void ParseTitle()
@@ -67,22 +88,37 @@ public class AlchoholDialogScript : MonoBehaviour
         string title = TitleInput.GetComponent<InputField>().text;
         if (title != null && title != "")
         {
-            Alchohol.Title = title;
+            TempTitle = title;
             TitleCheck = true;
+            TitleInputName.SetActive(true);
         }
         else
         {
             TitleInput.GetComponent<InputField>().text = null;
             TitleCheck = false;
+            TitleInputName.SetActive(false);
+        }
+    }
+
+    public void ToggleTitleInputName()
+    {
+        string title = TitleInput.GetComponent<InputField>().text;
+        if (title != null && title != "")
+        {
+            TitleInputName.SetActive(true);
+        }
+        else
+        {
+            TitleInputName.SetActive(false);
         }
     }
 
     public void ParseVolume()
     {
         float volume = 0;
-        if(Single.TryParse(VolumeInput.GetComponent<InputField>().text.Replace('.', ','),out volume) && volume > 0)
+        if(Single.TryParse(VolumeInput.GetComponent<InputField>().text, out volume) && volume > 0)
         {
-            Alchohol.Volume = volume;
+            TempVolume = volume;
             VolumeCheck = true;
         }
         else
@@ -92,19 +128,45 @@ public class AlchoholDialogScript : MonoBehaviour
         }
     }
 
+    public void ToggleVolumeInputName()
+    {
+        string volume = VolumeInput.GetComponent<InputField>().text;
+        if (volume != null && volume != "")
+        {
+            VolumeInputName.SetActive(true);
+        }
+        else
+        {
+            VolumeInputName.SetActive(false);
+        }
+    }
+
     public void ParsePercentage()
     {
         float percentage = 0;
-        if (Single.TryParse(PercentageInput.GetComponent<InputField>().text.Replace('.', ','), out percentage) 
+        if (Single.TryParse(PercentageInput.GetComponent<InputField>().text, out percentage) 
             && percentage > 0 && percentage <= 100)
         {
-            Alchohol.Percentage = percentage;
+            TempPercentage = percentage;
             PercentageCheck = true;
         }
         else
         {
             PercentageInput.GetComponent<InputField>().text = null;
             PercentageCheck = false;
+        }
+    }
+
+    public void TogglePercentageInputName()
+    {
+        string percentage = PercentageInput.GetComponent<InputField>().text;
+        if (percentage != null && percentage != "")
+        {
+            PercentageInputName.SetActive(true);
+        }
+        else
+        {
+            PercentageInputName.SetActive(false);
         }
     }
 

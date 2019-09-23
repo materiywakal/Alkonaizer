@@ -7,9 +7,6 @@ public class CheckBoxScript : MonoBehaviour
 
     public void ChangeOtherToggle()
     {
-        if (gameObject.GetComponent<Toggle>().isOn)
-        {
-            Toggle.GetComponent<Toggle>().isOn = false;
-        }
+        Toggle.GetComponent<Toggle>().isOn = !gameObject.GetComponent<Toggle>().isOn;
     }
 }

@@ -9,8 +9,10 @@ public class PeopleDialogScript : MonoBehaviour
     [SerializeField] public GameObject MCheckBox;
     [SerializeField] public GameObject FCheckBox;
     [SerializeField] public GameObject HeightInput;
+    [SerializeField] public GameObject HeightInputName;
     private bool HeightCheck = true;
     [SerializeField] public GameObject WeightInput;
+    [SerializeField] public GameObject WeightInputName;
     private bool WeightCheck = true;
 
     private void Start()
@@ -32,6 +34,14 @@ public class PeopleDialogScript : MonoBehaviour
             HeightInput.GetComponent<InputField>().text = People.Height.ToString();
         if (People.Weight != 0)
             WeightInput.GetComponent<InputField>().text = People.Weight.ToString();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DestroySelf();
+        }
     }
 
     public void Save()
@@ -66,6 +76,19 @@ public class PeopleDialogScript : MonoBehaviour
         }
     }
 
+    public void ToggleHeightInputName()
+    {
+        string height = HeightInput.GetComponent<InputField>().text;
+        if (height != null && height != "")
+        {
+            HeightInputName.SetActive(true);
+        }
+        else
+        {
+            HeightInputName.SetActive(false);
+        }
+    }
+
     public void ParseWeight()
     {
         float weight = 0;
@@ -79,6 +102,19 @@ public class PeopleDialogScript : MonoBehaviour
         {
             WeightInput.GetComponent<InputField>().text = null;
             WeightCheck = false;
+        }
+    }
+
+    public void ToggleWeightInputName()
+    {
+        string weight = WeightInput.GetComponent<InputField>().text;
+        if (weight != null && weight != "")
+        {
+            WeightInputName.SetActive(true);
+        }
+        else
+        {
+            WeightInputName.SetActive(false);
         }
     }
 
