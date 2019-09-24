@@ -2,8 +2,7 @@
 
 public class AddButtonScript : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject DialogPrefab;
+    [SerializeField] public GameObject DialogPrefab;
 
     private Transform DialogParent;
 

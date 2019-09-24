@@ -54,8 +54,7 @@ public class AlchoholDialogScript : MonoBehaviour
 
     public void Save()
     {
-        // Send AlchoholModel to logical entity
-        if(!CheckValues())
+        if (!CheckValues())
             return;
 
         Alchohol.Title = TempTitle;
@@ -74,10 +73,10 @@ public class AlchoholDialogScript : MonoBehaviour
             button.GetComponent<ItemButtonScript>().Alchohol.Volume = Alchohol.Volume;
             button.GetComponent<ItemButtonScript>().Alchohol.Percentage = Alchohol.Percentage;
         }
+
         button.GetComponent<ItemButtonScript>().SetupTitle();
         button.transform.SetAsFirstSibling();
-
-        //Updating calculations
+        
         GameObject.Find("TopPanel").GetComponent<StateCalculationScript>().UpdateState();
 
         Destroy(gameObject);
@@ -116,7 +115,7 @@ public class AlchoholDialogScript : MonoBehaviour
     public void ParseVolume()
     {
         float volume = 0;
-        if(Single.TryParse(VolumeInput.GetComponent<InputField>().text, out volume) && volume > 0)
+        if (Single.TryParse(VolumeInput.GetComponent<InputField>().text, out volume) && volume > 0)
         {
             TempVolume = volume;
             VolumeCheck = true;
@@ -144,7 +143,8 @@ public class AlchoholDialogScript : MonoBehaviour
     public void ParsePercentage()
     {
         float percentage = 0;
-        if (Single.TryParse(PercentageInput.GetComponent<InputField>().text, out percentage) 
+        if (PercentageInput.GetComponent<InputField>().text.Length > 5
+            && Single.TryParse(PercentageInput.GetComponent<InputField>().text, out percentage)
             && percentage > 0 && percentage <= 100)
         {
             TempPercentage = percentage;
@@ -155,6 +155,8 @@ public class AlchoholDialogScript : MonoBehaviour
             PercentageInput.GetComponent<InputField>().text = null;
             PercentageCheck = false;
         }
+
+        Debug.Log(percentage);
     }
 
     public void TogglePercentageInputName()

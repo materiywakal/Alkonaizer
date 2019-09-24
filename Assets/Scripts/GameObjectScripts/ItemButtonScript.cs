@@ -22,7 +22,6 @@ public class ItemButtonScript : MonoBehaviour
         GameObject obj = GameObject.Find("TopPanel");
         if (obj != null)
         {
-            //Updating calculations
             obj.GetComponent<StateCalculationScript>().UpdateState();
         }
     }

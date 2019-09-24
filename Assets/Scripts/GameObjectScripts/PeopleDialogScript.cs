@@ -18,7 +18,7 @@ public class PeopleDialogScript : MonoBehaviour
     private void Start()
     {
         People = GameObject.Find("TopPanel").GetComponent<StateCalculationScript>().GetPeople();
-        if(People == null)
+        if (People == null)
             People = new PeopleModel();
 
         if (People.IsMale)
@@ -48,12 +48,10 @@ public class PeopleDialogScript : MonoBehaviour
     {
         if (CheckValues())
         {
-            //Save
             GameObject topPanel = GameObject.Find("TopPanel");
 
             topPanel.GetComponent<StateCalculationScript>().SetPeople(People);
-
-            //Updating calculations
+            
             topPanel.GetComponent<StateCalculationScript>().UpdateState();
 
             DestroySelf();

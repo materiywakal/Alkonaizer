@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +18,7 @@ public class StateCalculationScript : MonoBehaviour
         DataSaver.DeserializeData();
 
         People = DataSaver.People;
-        if(People == null)
+        if (People == null)
             People = new PeopleModel();
 
         AlchoholList = DataSaver.AlchoholList;
@@ -123,19 +122,19 @@ public class StateCalculationScript : MonoBehaviour
         }
         else if (C > 1.5f && C <= 2)
         {
-            return (int)((C - 1.5f) * 100f / 0.5f);
+            return (int) ((C - 1.5f) * 100f / 0.5f);
         }
         else if (C > 2 && C <= 3)
         {
-            return (int)((C - 2f) * 100f);
+            return (int) ((C - 2f) * 100f);
         }
         else if (C > 3 && C < 5)
         {
-            return (int)((C - 3f) * 100f / 2f);
+            return (int) ((C - 3f) * 100f / 2f);
         }
         else
         {
-            return (int)((C - 5f) * 100f / 5f + 100f);
+            return (int) ((C - 5f) * 100f / 5f + 100f);
         }
     }
 
