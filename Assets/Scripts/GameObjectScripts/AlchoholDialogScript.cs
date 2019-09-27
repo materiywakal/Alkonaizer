@@ -143,7 +143,7 @@ public class AlchoholDialogScript : MonoBehaviour
     public void ParsePercentage()
     {
         float percentage = 0;
-        if (PercentageInput.GetComponent<InputField>().text.Length > 5
+        if (PercentageInput.GetComponent<InputField>().text.Length <= 5
             && Single.TryParse(PercentageInput.GetComponent<InputField>().text, out percentage)
             && percentage > 0 && percentage <= 100)
         {
@@ -155,8 +155,6 @@ public class AlchoholDialogScript : MonoBehaviour
             PercentageInput.GetComponent<InputField>().text = null;
             PercentageCheck = false;
         }
-
-        Debug.Log(percentage);
     }
 
     public void TogglePercentageInputName()

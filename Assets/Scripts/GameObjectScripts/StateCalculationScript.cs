@@ -86,27 +86,27 @@ public class StateCalculationScript : MonoBehaviour
 
         if (C <= 0.5f)
         {
-            return "По нулям (" + statePercentage + "%)";
+            return "Трезвость (" + statePercentage + "%)";
         }
         else if (C > 0.5f && C <= 1.5f)
         {
-            return "Легко (" + statePercentage + "%)";
+            return "Легкое опьянение (" + statePercentage + "%)";
         }
         else if (C > 1.5f && C <= 2)
         {
-            return "Среднячок (" + statePercentage + "%)";
+            return "Среднее опьянение (" + statePercentage + "%)";
         }
         else if (C > 2 && C <= 3)
         {
-            return "Все, нормас (" + statePercentage + "%)";
+            return "Сильное опьянение (" + statePercentage + "%)";
         }
         else if (C > 3 && C < 5)
         {
-            return "Траванулся (" + statePercentage + "%)";
+            return "Отравление (" + statePercentage + "%)";
         }
         else
         {
-            return "Умер (" + statePercentage + "%)";
+            return "Смерть (" + statePercentage + "%)";
         }
     }
 
